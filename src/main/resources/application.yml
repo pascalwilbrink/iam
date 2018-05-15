@@ -1,0 +1,10 @@
+database: POSTGRESQL
+
+spring:
+  application:
+    name: IAM
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/iam
+    username: postgres
+    password: postgres
