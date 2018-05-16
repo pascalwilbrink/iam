@@ -1,8 +1,9 @@
-package nl.wilbrink.service;
+package nl.wilbrink.account.service;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
+import nl.wilbrink.account.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,10 +13,20 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-public class IAMUserDetailsService implements UserDetailsService {
+public class AppUserDetailsService implements UserDetailsService {
+
+    private final PasswordEncoder passwordEncoder;
+
+    private final AccountRepository accountRepository;
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    public AppUserDetailsService(
+        PasswordEncoder passwordEncoder,
+        AccountRepository accountRepository
+    ) {
+        this.passwordEncoder = passwordEncoder;
+        this.accountRepository = accountRepository;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

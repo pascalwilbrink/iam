@@ -14,8 +14,8 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
 
-import nl.wilbrink.service.IAMClientDetailsService;
-import nl.wilbrink.service.IAMUserDetailsService;
+import nl.wilbrink.client.service.AppClientDetailsService;
+import nl.wilbrink.account.service.AppUserDetailsService;
 
 @Configuration
 @EnableAuthorizationServer
@@ -26,9 +26,9 @@ public class Oauth2AuthorizationServerConfig extends AuthorizationServerConfigur
     private AuthenticationManager authenticationManager;
 
     @Autowired
-    private IAMUserDetailsService userDetailsService;
+    private AppUserDetailsService userDetailsService;
     @Autowired
-    private IAMClientDetailsService clientDetailsService;
+    private AppClientDetailsService clientDetailsService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;

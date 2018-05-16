@@ -9,14 +9,14 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import nl.wilbrink.service.IAMUserDetailsService;
+import nl.wilbrink.account.service.AppUserDetailsService;
 
 @Configuration
 @EnableWebSecurity
 public class ServerSecurityConfig extends WebSecurityConfigurerAdapter  {
 
     @Autowired
-    private IAMUserDetailsService userDetailsService;
+    private AppUserDetailsService userDetailsService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
