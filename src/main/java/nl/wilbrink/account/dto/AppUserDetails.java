@@ -46,7 +46,7 @@ public class AppUserDetails implements UserDetails {
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return accountPassword.getExpiresAt().isBefore(now());
+        return !accountPassword.getExpiresAt().isBefore(now());
     }
 
     @Override

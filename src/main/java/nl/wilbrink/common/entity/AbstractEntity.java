@@ -4,17 +4,17 @@ import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.Version;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @MappedSuperclass
+@EntityListeners(AuditingEntityListener.class)
 public abstract class AbstractEntity {
 
     @Id
+    @GeneratedValue
     private Long id;
 
     @Version
@@ -22,15 +22,19 @@ public abstract class AbstractEntity {
     private Long version;
 
     @CreatedBy
+    @Column(name = "created_by")
     private Long createdBy;
 
     @CreatedDate
+    @Column
     private LocalDateTime created;
 
     @LastModifiedBy
+    @Column(name = "updated_by")
     private Long updatedBy;
 
     @LastModifiedDate
+    @Column
     private LocalDateTime updated;
 
     public void setId(Long id) {

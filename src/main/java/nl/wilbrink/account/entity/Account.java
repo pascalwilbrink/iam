@@ -13,6 +13,9 @@ public class Account extends AbstractEntity {
     @Column
     private String username;
 
+    @Column(name = "email_address")
+    private String emailAddress;
+
     @Column
     private boolean locked;
 
@@ -28,6 +31,14 @@ public class Account extends AbstractEntity {
 
     public String getUsername() {
         return username;
+    }
+
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
+    }
+
+    public String getEmailAddress() {
+        return emailAddress;
     }
 
     public void setLocked(boolean locked) {

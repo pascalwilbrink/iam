@@ -3,73 +3,42 @@ package nl.wilbrink.account.service;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import nl.wilbrink.account.dto.AppUserDetails;
+import nl.wilbrink.account.entity.Account;
 import nl.wilbrink.account.repository.AccountRepository;
+import nl.wilbrink.common.exception.WebException;
+import nl.wilbrink.password.entity.AccountPassword;
+import nl.wilbrink.password.repository.PasswordRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import static java.lang.String.format;
 
 @Service
 public class AppUserDetailsService implements UserDetailsService {
 
-    private final PasswordEncoder passwordEncoder;
-
     private final AccountRepository accountRepository;
+    private final PasswordRepository passwordRepository;
 
     @Autowired
     public AppUserDetailsService(
-        PasswordEncoder passwordEncoder,
-        AccountRepository accountRepository
-    ) {
-        this.passwordEncoder = passwordEncoder;
+            AccountRepository accountRepository,
+            PasswordRepository passwordRepository) {
         this.accountRepository = accountRepository;
+        this.passwordRepository = passwordRepository;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserDetails userDetails = new UserDetails() {
+        Account account = accountRepository.getByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException(format("Username %s not found", username)));
+        AccountPassword password = passwordRepository.findActiveByAccountId(account.getId())
+                .orElseThrow(() -> new WebException(format("No active password found for user %s", account.getUsername()), 400));
 
-            @Override
-            public Collection<? extends GrantedAuthority> getAuthorities() {
-                Collection<GrantedAuthority> authorities = new ArrayList<>();
-
-                return authorities;
-            }
-
-            @Override
-            public String getPassword() {
-                return passwordEncoder.encode("pass");
-            }
-
-            @Override
-            public String getUsername() {
-                return username;
-            }
-
-            @Override
-            public boolean isAccountNonExpired() {
-                return true;
-            }
-
-            @Override
-            public boolean isAccountNonLocked() {
-                return true;
-            }
-
-            @Override
-            public boolean isCredentialsNonExpired() {
-                return true;
-            }
-
-            @Override
-            public boolean isEnabled() {
-                return true;
-            }
-        };
-
-        return userDetails;
+        return new AppUserDetails(account, password);
     }
 }

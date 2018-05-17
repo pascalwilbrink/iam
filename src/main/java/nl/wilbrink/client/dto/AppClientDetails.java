@@ -46,6 +46,9 @@ public class AppClientDetails implements ClientDetails {
     public Set<String> getScope() {
         Set<String> scope = new HashSet<>();
 
+        scope.add("READ");
+        scope.add("WRITE");
+
         return scope;
     }
 

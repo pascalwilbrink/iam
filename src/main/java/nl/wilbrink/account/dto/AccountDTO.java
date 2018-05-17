@@ -6,6 +6,8 @@ public class AccountDTO {
 
     private String username;
 
+    private String emailAddress;
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -20,6 +22,14 @@ public class AccountDTO {
 
     public String getUsername() {
         return username;
+    }
+
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
+    }
+
+    public String getEmailAddress() {
+        return emailAddress;
     }
 
 }

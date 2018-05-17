@@ -11,8 +11,8 @@ import java.time.LocalDateTime;
 @Table(name = "account_passwords")
 public class AccountPassword extends AbstractEntity {
 
-    @Column(name = "user_id")
-    private Long userId;
+    @Column(name = "account_id")
+    private Long accountId;
 
     @Column
     private String password;
@@ -23,12 +23,12 @@ public class AccountPassword extends AbstractEntity {
     @Column
     private boolean active;
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setAccountId(Long accountId) {
+        this.accountId = accountId;
     }
 
-    public Long getUserId() {
-        return userId;
+    public Long getAccountId() {
+        return accountId;
     }
 
     public void setPassword(String password) {

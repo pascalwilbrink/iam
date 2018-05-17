@@ -29,7 +29,6 @@ public class AppClientDetailsService implements ClientDetailsService {
         Client entity = clientRepository.findByClientId(clientId)
             .orElseThrow(() -> new ClientRegistrationException(format("Client with clientId %s not found", clientId)));
 
-        entity.setClientSecret(passwordEncoder.encode("clientSecret"));
         return new AppClientDetails(entity);
     }
 }
